@@ -45,22 +45,9 @@ Here are a few examples:
 
 Assistant:"""
 
-### Retrieval augmented generation (RAG) 
-The final comparison is with RAG technique.The RAG pattern builds on prompt engineering. Instead of a user providing relevant data, an
-application intercepts the user's input. The application searches across a data repository to
-retrieve content relevant to the question or input. The application feeds the data that it finds to
-the generative AI model to generate content. 
-To implement our RAG system, we utilized a dataset of 95,000 radiology report findings-
-impressions pairs as the knowledge source. This dataset was ingested using the Langchain
-document loader. Next, we generated embedding vectors for the loaded documents by passing
-them through the Titan Text Embedding model on Amazon Bedrock. The output vector
-representations were stored in a FAISS vector store for efficient retrieval. With the infrastructure
-in place, we set up a pipeline leveraging Langchain for prompt engineering and retrieval, FAISS
-for vector similarity search, and the Anthropic Claudev2 for inference and impressions
-generation. Together, these components enabled both precise document retrieval and high-
-quality conditional text generation from the findings to impressions dataset. The modular
-combination of cutting-edge AI libraries allowed rapid implementation and experimentation with
-the latest RAG techniques
+### Managed Retrieval augmented generation (RAG) with Amazon Bedrock Knowledge Base
+To implement our RAG system, we utilized a dataset of 95,000 radiology report findings-impressions pairs as the knowledge source. This dataset was uploaded to S3 data source and then ingested using Amazon Bedrock Knowledge Base. We used Amazon Titan Text Embeddings model on Amazon Bedrock to generate vector embeddings. Embeddings are numerical representations of real-world objects that machine learning systems use to understand complex knowledge domains like humans do. The output vector representations were stored in a newly created vector store for efficient retrieval Amazon OpenSearch Serverless vector search collection. This leads to a public vector search collection and vector index set up with the required fields and necessary configurations. With the infrastructure in place, we set up a prompt template and leverage RetrieveandGenerate API for vector similarity search, and the Anthropic Claude 3 Sonnet model for impressions generation. Together, these components enabled both precise document retrieval and high-quality conditional text generation from the findings-to-impressions dataset.
+The following reference architecture diagram in Figure 3 illustrates the fully managed RAG pattern with Amazon Bedrock Knowledge Base on AWS. The fully managed RAG provided by Knowledge Bases for Amazon Bedrock, converts user queries into embeddings, searches the knowledge base, obtains relevant results, augments the prompt and then invokes a LLM (Claude 3 Sonnet) to generate the response.
 
 ![Retrieval augmented generation pattern](images/Arch.PNG)
 ----------------------------------------------------------------------------------------------------------------------------------------
